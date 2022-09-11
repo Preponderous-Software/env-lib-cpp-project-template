@@ -37,9 +37,9 @@ void initiateEntityMovement(std::vector<Entity>& entities, Environment& environm
 }
 
 int main() {
-    int environmentSize = 30;
+    int environmentSize = 16;
     Environment environment(0, "Earth", environmentSize);
-    std::vector<Entity> entities = generateEntities(environmentSize*10);
+    std::vector<Entity> entities = generateEntities(environmentSize);
     addEntitiesToEnvironment(entities, environment);
     int numTicks = 0;
     bool running = true;
@@ -47,7 +47,7 @@ int main() {
         initiateEntityMovement(entities, environment);
         environment.printConsoleRepresentation();
         numTicks++;
-        if (numTicks == 1000) {
+        if (numTicks == 100) {
             running = false;
         }
     }

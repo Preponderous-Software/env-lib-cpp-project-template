@@ -1,8 +1,8 @@
 # remove old executable
-rm ./testing
+rm ./main_executable
 
 # compile
 make
 
 # run
-./testing
+./main_executable

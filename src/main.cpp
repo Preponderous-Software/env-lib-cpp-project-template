@@ -23,6 +23,12 @@ std::vector<Entity> generateEntities(int numEntities) {
     return entities;
 }
 
+void addEntitiesToEnvironment(std::vector<Entity>& entities, Environment& environment) {
+    for (Entity& entity : entities) {
+        environment.addEntity(entity);
+    }
+}
+
 void initiateEntityMovement(std::vector<Entity>& entities, Environment& environment) {
     for (Entity& entity : entities) {
         Entity& retrievedEntity = environment.getEntity(entity.getId());     
@@ -31,17 +37,22 @@ void initiateEntityMovement(std::vector<Entity>& entities, Environment& environm
 }
 
 int main() {
-    int environmentSize = 16;
+    int environmentSize = 30;
     Environment environment(0, "Earth", environmentSize);
-    std::vector<Entity> entities = generateEntities(environmentSize);
-    for (Entity& entity : entities) {
-        environment.addEntity(entity);
-    }
+    std::vector<Entity> entities = generateEntities(environmentSize*10);
+    addEntitiesToEnvironment(entities, environment);
+    int numTicks = 0;
     bool running = true;
     while (running) {
         initiateEntityMovement(entities, environment);
         environment.printConsoleRepresentation();
-        sleep(1);
+        numTicks++;
+        if (numTicks == 1000) {
+            running = false;
+        }
     }
+    std::cout << "Locations: " << environment.getGrid()->getLocations().size() << "\n";
+    std::cout << "Entities: " << environment.getNumEntities() << "\n";
+    std::cout << "Ticks elapsed: " << numTicks << std::endl;
     return 0;
 }
